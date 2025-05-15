@@ -48,34 +48,53 @@
         }
         .card {
             background: #fff;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .filter-form {
             margin-bottom: 20px;
-            padding: 15px;
-            background: #fff;
-            border-radius: 5px;
         }
-        .severity-low {
-            color: green;
+        .bugs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
-        .severity-medium {
-            color: orange;
+        .status-OPEN {
+            border-left: 5px solid #28a745;
         }
-        .severity-high {
-            color: red;
+        .status-IN_PROGRESS {
+            border-left: 5px solid #ffc107;
         }
-        .status-open {
-            background-color: #ffeeee;
+        .status-RESOLVED {
+            border-left: 5px solid #17a2b8;
         }
-        .status-in_progress {
-            background-color: #ffffee;
+        .status-CLOSED {
+            border-left: 5px solid #6c757d;
         }
-        .status-resolved {
-            background-color: #eeffee;
+        .severity-LOW {
+            color: #28a745;
+        }
+        .severity-MEDIUM {
+            color: #ffc107;
+        }
+        .severity-HIGH {
+            color: #fd7e14;
+        }
+        .severity-CRITICAL {
+            color: #dc3545;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
         }
     </style>
 </head>
@@ -83,13 +102,14 @@
     <header>
         <h1>Bug Tracker</h1>
     </header>
+    
     <nav>
-        <a href="{% url 'bugs:bug-list' %}">All Bugs</a>
-        <a href="{% url 'bugs:bug-create' %}">Add New Bug</a>
+        <a href="{% url 'bug-list' %}">Home</a>
+        <a href="{% url 'bug-create' %}">Add New Bug</a>
     </nav>
+    
     <div class="container">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </div>
 </body>
 </html>

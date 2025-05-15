@@ -29,7 +29,7 @@
             </div>
             
             <button type="submit" class="btn">Apply Filters</button>
-            <a href="{% url 'bugs:bug-list' %}" class="btn">Clear Filters</a>
+            <a href="{% url 'bug-list' %}" class="btn">Clear Filters</a>
         </form>
     </div>
     
@@ -38,19 +38,21 @@
             {% for bug in bugs %}
                 <div class="card status-{{ bug.status }}">
                     <h3>
-                        <a href="{% url 'bugs:bug-detail' bug.pk %}">{{ bug.title }}</a>
+                        <a href="{% url 'bug-detail' bug.pk %}">{{ bug.title }}</a>
                         <span class="severity-{{ bug.severity }}">[{{ bug.get_severity_display }}]</span>
                     </h3>
                     <p>Status: {{ bug.get_status_display }}</p>
                     <p>{{ bug.description|truncatewords:30 }}</p>
                     <div>
-                        <a href="{% url 'bugs:bug-update' bug.pk %}" class="btn">Edit</a>
-                        <a href="{% url 'bugs:bug-detail' bug.pk %}" class="btn">View Details</a>
+                        <a href="{% url 'bug-update' bug.pk %}" class="btn">Edit</a>
+                        <a href="{% url 'bug-detail' bug.pk %}" class="btn">View Details</a>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p>No bugs found. <a href="{% url 'bugs:bug-create' %}">Add a new bug</a>.</p>
+            <div class="card">
+                <p>No bugs found.</p>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

@@ -14,7 +14,7 @@
         <div style="margin: 20px 0;">
             <h3>Status: {{ bug.get_status_display }}</h3>
             
-            <form method="post" action="{% url 'bugs:update-bug-status' bug.pk %}">
+            <form method="post" action="{% url 'update-bug-status' bug.pk %}">
                 {% csrf_token %}
                 <div style="margin-bottom: 10px;">
                     <label for="status">Update Status:</label>
@@ -34,8 +34,8 @@
         </div>
         
         <div style="margin-top: 20px;">
-            <a href="{% url 'bugs:bug-update' bug.pk %}" class="btn">Edit Bug</a>
-            <a href="{% url 'bugs:bug-list' %}" class="btn">Back to List</a>
+            <a href="{% url 'bug-update' bug.pk %}" class="btn">Edit Bug</a>
+            <a href="{% url 'bug-list' %}" class="btn">Back to List</a>
         </div>
     </div>
 {% endblock %}

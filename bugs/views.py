@@ -34,13 +34,13 @@ class BugCreateView(CreateView):
     model = Bug
     form_class = BugForm
     template_name = 'bugs/bug_form.html'
-    success_url = reverse_lazy('bug-list')
+    success_url = reverse_lazy('bugs:bug-list')
 
 class BugUpdateView(UpdateView):
     model = Bug
     form_class = BugForm
     template_name = 'bugs/bug_form.html'
-    success_url = reverse_lazy('bug-list')
+    success_url = reverse_lazy('bugs:bug-list')
 
 class BugDetailView(DetailView):
     model = Bug
@@ -56,4 +56,4 @@ def update_bug_status(request, pk):
             bug.status = new_status
             bug.save()
     
-    return redirect('bug-detail', pk=bug.pk)
+    return redirect('bugs:bug-detail', pk=bug.pk)

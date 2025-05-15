@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'bugs'
+
 urlpatterns = [
     path('', views.BugListView.as_view(), name='bug-list'),
     path('bug/new/', views.BugCreateView.as_view(), name='bug-create'),
