@@ -1,0 +1,41 @@
+{% extends 'bugs/base.html' %}
+
+{% block title %}{{ bug.title }}{% endblock %}
+
+{% block content %}
+    <div class="card status-{{ bug.status }}">
+        <h2>{{ bug.title }} <span class="severity-{{ bug.severity }}">[{{ bug.get_severity_display }}]</span></h2>
+        
+        <div style="margin: 20px 0;">
+            <h3>Description:</h3>
+            <p>{{ bug.description }}</p>
+        </div>
+        
+        <div style="margin: 20px 0;">
+            <h3>Status: {{ bug.get_status_display }}</h3>
+            
+            <form method="post" action="{% url 'update-bug-status' bug.pk %}">
+                {% csrf_token %}
+                <div style="margin-bottom: 10px;">
+                    <label for="status">Update Status:</label>
+                    <select name="status" id="status">
+                        {% for value, label in bug.STATUS_CHOICES %}
+                            <option value="{{ value }}" {% if bug.status == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn">Update Status</button>
+            </form>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <p>Created: {{ bug.created_at|date:"F j, Y, g:i a" }}</p>
+            <p>Last Updated: {{ bug.updated_at|date:"F j, Y, g:i a" }}</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="{% url 'bug-update' bug.pk %}" class="btn">Edit Bug</a>
+            <a href="{% url 'bug-list' %}" class="btn">Back to List</a>
+        </div>
+    </div>
+{% endblock %}

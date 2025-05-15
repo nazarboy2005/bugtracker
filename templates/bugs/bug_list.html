@@ -1,0 +1,56 @@
+{% extends 'bugs/base.html' %}
+
+{% block title %}Bug List{% endblock %}
+
+{% block content %}
+    <h2>Bug List</h2>
+    
+    <div class="filter-form card">
+        <h3>Filter Bugs</h3>
+        <form method="get">
+            <div style="margin-bottom: 10px;">
+                <label for="severity">Severity:</label>
+                <select name="severity" id="severity">
+                    <option value="">All</option>
+                    {% for value, label in severity_choices %}
+                        <option value="{{ value }}" {% if request.GET.severity == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="">All</option>
+                    {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn">Apply Filters</button>
+            <a href="{% url 'bug-list' %}" class="btn">Clear Filters</a>
+        </form>
+    </div>
+    
+    <div class="bugs-container">
+        {% if bugs %}
+            {% for bug in bugs %}
+                <div class="card status-{{ bug.status }}">
+                    <h3>
+                        <a href="{% url 'bug-detail' bug.pk %}">{{ bug.title }}</a>
+                        <span class="severity-{{ bug.severity }}">[{{ bug.get_severity_display }}]</span>
+                    </h3>
+                    <p>Status: {{ bug.get_status_display }}</p>
+                    <p>{{ bug.description|truncatewords:30 }}</p>
+                    <div>
+                        <a href="{% url 'bug-update' bug.pk %}" class="btn">Edit</a>
+                        <a href="{% url 'bug-detail' bug.pk %}" class="btn">View Details</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No bugs found. <a href="{% url 'bug-create' %}">Add a new bug</a>.</p>
+        {% endif %}
+    </div>
+{% endblock %}
